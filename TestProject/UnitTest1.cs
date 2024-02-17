@@ -169,7 +169,7 @@ public class dotnetappApplicationTests
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
     }
     [Test] //......check for POST resort authorized to Admin
-    public async Task Post_Resort()
+    public async Task Backend_TestPostResort()
     {
         string uniqueId = Guid.NewGuid().ToString();
         string uniqueUsername = $"abcd_{uniqueId}";
