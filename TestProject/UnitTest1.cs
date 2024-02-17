@@ -97,69 +97,73 @@ public class dotnetappApplicationTests
         Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
     }
 
-    // [Test] //..........Check for POST review authorized to Customer
-    // public async Task Backend_TestPostReviews()
-    // {
-    //     string uniqueId = Guid.NewGuid().ToString();
-    //     string uniqueUsername = $"abcd_{uniqueId}";
-    //     string uniquePassword = $"abcdA{uniqueId}@123";
-    //     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+   
+      [Test] //......check for POST Review authorized to Customer
+    public async Task Backend_TestPostReviews()
+    {
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-    //      string RegisterrequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Customer\"}}";
-    //     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(RegisterrequestBody, Encoding.UTF8, "application/json"));
-    //      Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+         string RegisterrequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Customer\"}}";
+        HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(RegisterrequestBody, Encoding.UTF8, "application/json"));
+         Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-    //     var customerLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
-    //     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(customerLoginRequestBody, Encoding.UTF8, "application/json"));
-    //     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-    //     string responseString = await loginResponse.Content.ReadAsStringAsync();
-    //     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-    //     string customerAuthToken = responseMap.token;
-
-    //     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
-
-    //     var review = new
-    //     {
-    //         Subject = "Test subject",
-    //         Body = "Test body",
-    //         Rating = 5
-    //     };
-
-    //     string requestBody = JsonConvert.SerializeObject(review);
-    //     HttpResponseMessage response = await _httpClient.PostAsync("/api/review", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-    //     Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-    // }
-
-    // [Test] //..........Check for GET review authorized to Admin
-    // public async Task Backend_TestGetAllReviews()
-    // {
-    //     string uniqueId = Guid.NewGuid().ToString();
-    //     string uniqueUsername = $"abcd_{uniqueId}";
-    //     string uniquePassword = $"abcdA{uniqueId}@123";
-    //     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-    //      string RegisterrequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Admin\"}}";
-    //     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(RegisterrequestBody, Encoding.UTF8, "application/json"));
-    //      Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
-
-    //     var adminLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
-    //     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
-    //     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-    //     string responseString = await loginResponse.Content.ReadAsStringAsync();
-    //     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-    //     string adminAuthToken = responseMap.token;
-
-    //     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
-
-    //     HttpResponseMessage getReviewsResponse = await _httpClient.GetAsync("/api/review");
         
-    //     Assert.AreEqual(HttpStatusCode.OK, getReviewsResponse.StatusCode);
-    // }
+        var adminLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+        string responseString = await loginResponse.Content.ReadAsStringAsync();
+        dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+        string adminAuthToken = responseMap.token;
+
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+       var review = new
+        {
+            UserId = "1",
+            Subject = "Test subject",
+            Body = "Test body",
+            Rating = 5
+        };
+
+        string requestBody = JsonConvert.SerializeObject(review);
+        HttpResponseMessage response = await _httpClient.PostAsync("/api/Review", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+        
+       Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Test] //..........Check for GET review authorized to Admin
+    public async Task Backend_TestGetAllReviews()
+    {
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+         string RegisterrequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Admin\"}}";
+        HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(RegisterrequestBody, Encoding.UTF8, "application/json"));
+         Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+        var adminLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+        string responseString = await loginResponse.Content.ReadAsStringAsync();
+        dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+        string adminAuthToken = responseMap.token;
+
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+        HttpResponseMessage getReviewsResponse = await _httpClient.GetAsync("/api/review");
+        
+        Assert.AreEqual(HttpStatusCode.OK, getReviewsResponse.StatusCode);
+    }
 
     [Test] //.......check for GET resorts 
-    public async Task Get_Resorts()
+    public async Task Backend_TestGet_Resorts()
     {
         HttpResponseMessage response = await _httpClient.GetAsync("/api/resort");
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -203,234 +207,86 @@ public class dotnetappApplicationTests
         
         Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
     }
-        [Test] //.....................check for PUT resort
-        public async Task PUT_Resort()
+        [Test]
+public async Task Backend_TestPutResort()
+{
+    // Register Admin user
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+    string registerRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Admin\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+    // Log in as Admin
+    string adminLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+    string responseString = await loginResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    string adminAuthToken = responseMap.token;
+
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+    // Add a new resort
+    var resort = new
+    {
+        ResortName = "Test Resort",
+        ResortImageUrl = "test-image-url",
+        ResortLocation = "Test Location",
+        ResortAvailableStatus = "Available",
+        Price = 100,
+        Capacity = 50,
+        Description = "Test Description"
+    };
+
+    string requestBody = JsonConvert.SerializeObject(resort);
+    HttpResponseMessage addResortResponse = await _httpClient.PostAsync("/api/resort", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.Created, addResortResponse.StatusCode);
+
+    // Get the added resort details
+    string addResortResponseBody = await addResortResponse.Content.ReadAsStringAsync();
+    dynamic addResortResponseMap = JsonConvert.DeserializeObject(addResortResponseBody);
+
+    int? resortId = addResortResponseMap?.resortId;
+
+    if (resortId.HasValue)
+    {
+        var updatedResortDetails = new
         {
-            // Register Admin user
-            string uniqueId = Guid.NewGuid().ToString();
-            string uniqueUsername = $"abcd_{uniqueId}";
-            string uniquePassword = $"abcdA{uniqueId}@123";
-            string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+            ResortId = resortId, // Corrected variable name and added ResortId
+            ResortName = "Updated Resort Name",
+            ResortImageUrl = "updated-image-url",
+            ResortLocation = "Updated Location",
+            ResortAvailableStatus = "Updated Available Status",
+            Price = 200,
+            Capacity = 30,
+            Description = "Updated Description"
+        };
 
-            string registerRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Admin\"}}";
-            HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-            Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+        string updateResortRequestBody = JsonConvert.SerializeObject(updatedResortDetails);
+        HttpResponseMessage updateResortResponse = await _httpClient.PutAsync($"/api/resort/{resortId}", new StringContent(updateResortRequestBody, Encoding.UTF8, "application/json"));
 
-            // Log in as Admin
-            string adminLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
-            HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
-            Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        // Assert that the resort is updated successfully
+        Assert.AreEqual(HttpStatusCode.OK, updateResortResponse.StatusCode);
+    }
+    else
+    {
+        // Log additional information for debugging
+        string responseContent = await addResortResponse.Content.ReadAsStringAsync();
+        Console.WriteLine($"Add Resort Response Content: {responseContent}");
 
-            string responseString = await loginResponse.Content.ReadAsStringAsync();
-            dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-            string adminAuthToken = responseMap.token;
+        Assert.Fail("Resort ID is null or not found in the response.");
+    }
+}
 
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
-
-            // Add a new resort
-            var resort = new
-            {
-                ResortName = "Test Resort",
-                ResortImageUrl = "test-image-url",
-                ResortLocation = "Test Location",
-                ResortAvailableStatus = "Available",
-                Price = 100,
-                Capacity = 50,
-                Description = "Test Description"
-            };
-
-            string requestBody = JsonConvert.SerializeObject(resort);
-            HttpResponseMessage response = await _httpClient.PostAsync("/api/resort", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-
-            // Get the list of resorts
-            HttpResponseMessage getResortResponse = await _httpClient.GetAsync("api/resort");
-            Assert.AreEqual(HttpStatusCode.OK, getResortResponse.StatusCode);
-            string getResortResponseBody = await getResortResponse.Content.ReadAsStringAsync();
-            var resorts = JsonConvert.DeserializeObject<List<Resort>>(getResortResponseBody);
-            Assert.IsNotNull(resorts);
-            Assert.IsTrue(resorts.Any());
-
-            // Update the newly added resort
-            var updatedResort = new
-            {
-                ResortName = "Updated Resort Name",
-                ResortImageUrl = "updated-image-url",
-                ResortLocation = "Updated Location",
-                ResortAvailableStatus = "Updated Available Status",
-                Price = 200,
-                Capacity = 30,
-                Description = "Updated Description"
-            };
-
-            string updateResortRequestBody = JsonConvert.SerializeObject(updatedResort);
-
-            // Assuming ResortId property exists in Resort model
-            long resortIdToUpdate = resorts.FirstOrDefault()?.ResortId ?? 1;
-            HttpResponseMessage updateResortResponse = await _httpClient.PutAsync($"api/resort/{resortIdToUpdate}", new StringContent(updateResortRequestBody, Encoding.UTF8, "application/json"));
-          //  Assert.AreEqual(HttpStatusCode.OK, updateResortResponse.StatusCode);
-        }    
-
-//         [Test]
-// public async Task Backend_TestPutReviews()
-// {
-//     // Generate unique identifiers
-//     string uniqueId = Guid.NewGuid().ToString();
-//     string uniqueusername = $"abcd_{uniqueId}";
-//     string uniquepassword = $"abcdA{uniqueId}@123";
-//     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-//     // Register a customer
-//     string registerRequestBody = $"{{\"Username\": \"{uniqueusername}\", \"Password\": \"{uniquepassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"Role\" : \"customer\" }}";
-//     HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
-
-//     // Login the registered customer
-//     string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquepassword}\"}}";
-//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-//     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-//     dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-//     string customerAuthToken = loginResponseMap.token;
-
-//     // Use the obtained token in the request to add a review
-//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-    
-//     // Add a review to update
-//     var initialReviewDetails = new
-//     {
-//         UserId = 1,
-//         Subject = "Initial Subject",
-//         Body = "Initial Body",
-//         Rating = 3,
-//         DateCreated = DateTime.Now,
-//         User = new
-//         {
-//             UserId = 0,
-//             Email = "string",
-//             Password = "string",
-//             Username = "string",
-//             MobileNumber = "string",
-//             Role = "string"
-//         }
-//     };
-
-//     string initialReviewRequestBody = JsonConvert.SerializeObject(initialReviewDetails);
-//     HttpResponseMessage addReviewResponse = await _httpClient.PostAsync("/api", new StringContent(initialReviewRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, addReviewResponse.StatusCode);
-
-//     // Get the added review details
-//     string addReviewResponseBody = await addReviewResponse.Content.ReadAsStringAsync();
-//     dynamic addReviewResponseMap = JsonConvert.DeserializeObject(addReviewResponseBody);
-
-//     // Handle the potential null value for the review ID
-//     int? reviewId = addReviewResponseMap?.reviewId;
-
-//     if (reviewId.HasValue)
-//     {
-//         // Update the review with the correct reviewId
-//         var updatedReviewDetails = new
-//         {
-//             ReviewId = reviewId,
-//             UserId = 1,
-//             Subject = "Updated Subject",
-//             Body = "Updated Body",
-//             Rating = 4,
-//             DateCreated = DateTime.Now,
-//             User = new
-//             {
-//                 UserId = 0,
-//                 Email = "string",
-//                 Password = "string",
-//                 Username = "string",
-//                 MobileNumber = "string",
-//                 Role = "string"
-//             }
-//         };
-
-//         string updateReviewRequestBody = JsonConvert.SerializeObject(updatedReviewDetails);
-//         HttpResponseMessage updateReviewResponse = await _httpClient.PutAsync($"/api/{reviewId}", new StringContent(updateReviewRequestBody, Encoding.UTF8, "application/json"));
-
-//         // Assert that the review is updated successfully
-//         if (updateReviewResponse.StatusCode != HttpStatusCode.OK)
-//         {
-//             // Additional information about the response
-//             string responseContent = await updateReviewResponse.Content.ReadAsStringAsync();
-//             Console.WriteLine($"Response Content: {responseContent}");
-//         }
-
-//         Assert.AreEqual(HttpStatusCode.OK, updateReviewResponse.StatusCode);
-//     }
-//     else
-//     {
-//         // Log additional information for debugging
-//         string responseContent = await addReviewResponse.Content.ReadAsStringAsync();
-//         Console.WriteLine($"Add Review Response Content: {responseContent}");
-
-//         Assert.Fail("Review ID is null or not found in the response.");
-//     }
-// }    
-// [Test] // Check for DELETE resort authorized to admin
-// public async Task DeleteResort()
-// {
-//     // Arrange
-//     var uniqueId = Guid.NewGuid().ToString();
-//     var uniqueUsername = $"abcd_{uniqueId}";
-//     var uniquePassword = $"abcdA{uniqueId}@123";
-//     var uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-//     // Register an admin
-//     var registerRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Admin\"}}";
-//     var registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
-
-//     // Log in as admin
-//     var loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-//     var loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-//     var loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-//     var responseMap = JsonConvert.DeserializeObject<Dictionary<string, object>>(loginResponseBody);
-//     var authToken = responseMap["token"].ToString();
-
-//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
-
-//     // Add a resort
-//     var resort = new
-//     {
-//         ResortName = "Test Resort",
-//         ResortImageUrl = "test-image-url",
-//         ResortLocation = "Test Location",
-//         ResortAvailableStatus = "Available",
-//         Price = 100,
-//         Capacity = 50,
-//         Description = "Test Description"
-//     };
-
-//     var requestBody = JsonConvert.SerializeObject(resort);
-//     var addResortResponse = await _httpClient.PostAsync("/api/Resort", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.Created, addResortResponse.StatusCode);
-
-//     // Get the ID of the added resort
-//     var addedResortResponseBody = await addResortResponse.Content.ReadAsStringAsync();
-//     var addedResort = JsonConvert.DeserializeObject<Resort>(addedResortResponseBody);
-//     var resortIdToDelete = addedResort.ResortId;
-
-//     // Act: Delete the resort
-//     var deleteResortResponse = await _httpClient.DeleteAsync($"/api/Resort/{resortIdToDelete}");
-
-//     // Assert
-//     Assert.AreEqual(HttpStatusCode.OK, deleteResortResponse.StatusCode);
-
-//     // Verify that the resort is deleted
-//     var verifyDeleteResponse = await _httpClient.GetAsync($"/api/Resort/{resortIdToDelete}");
-//     Assert.AreEqual(HttpStatusCode.NotFound, verifyDeleteResponse.StatusCode);
-// }
 
 
     [Test] //......check for POST booking authorized to Customer
-    public async Task Post_Booking()
+    public async Task Backend_TestPostBooking()
     {
         string uniqueId = Guid.NewGuid().ToString();
         string uniqueUsername = $"abcd_{uniqueId}";
@@ -495,46 +351,10 @@ public class dotnetappApplicationTests
         
         Assert.AreEqual(HttpStatusCode.OK, getBookingsResponse.StatusCode);
     }
-// [Test]
-// public async Task GET_BookingByBookingId()
-// {
-//     // Register a customer user
-//     string uniqueId = Guid.NewGuid().ToString();
-//     string uniqueUsername = $"abcd_{uniqueId}";
-//     string uniquePassword = $"abcdA{uniqueId}@123";
-//     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-//     string registerRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Admin\"}}";
-//     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
-
-//     // Log in as Customer
-//     string customerLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
-//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(customerLoginRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-//     string responseString = await loginResponse.Content.ReadAsStringAsync();
-//     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-//     string customerAuthToken = responseMap.token;
-
-//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
-
-//     // Make a GET request to get a booking by its booking ID
-//     long bookingId = 1; // Set the booking ID to the desired value
-//     HttpResponseMessage getBookingByBookingIdResponse = await _httpClient.GetAsync($"/api/booking/{bookingId}");
-//     Assert.AreEqual(HttpStatusCode.OK, getBookingByBookingIdResponse.StatusCode);
-
-//     // Deserialize the response content as a booking
-//     string responseBody = await getBookingByBookingIdResponse.Content.ReadAsStringAsync();
-//     var booking = JsonConvert.DeserializeObject<Booking>(responseBody);
-//     Assert.IsNotNull(booking);
-
-//     // Ensure that the retrieved booking has the correct ID
-//     Assert.AreEqual(bookingId, booking.BookingId);
-// }
 
     [Test] // .............Check GET booking by UserId
-    public async Task GET_BookingByUserId()
+    public async Task Backend_TestGetBookingByUserId()
     {
         // Register a customer user
         string uniqueId = Guid.NewGuid().ToString();
@@ -569,7 +389,7 @@ public class dotnetappApplicationTests
         Assert.IsNotNull(bookings);
     }
   [Test] //............check for DELETE booking 
-    public async Task DeleteBooking()
+    public async Task Backend_TestDeleteBooking()
     {
         // Arrange
         long bookingIdToDelete = 1; // Provide the booking ID to delete
@@ -627,4 +447,5 @@ public class dotnetappApplicationTests
     {
         _httpClient.Dispose();
     }
+
 }
